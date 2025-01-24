@@ -88,7 +88,7 @@ param_input = st.data_editor(param_input, use_container_width=True, num_rows="dy
                                      help="电压"
                                  ),
                                  "t": st.column_config.NumberColumn(
-                                     "t",
+                                     "y",
                                      help="时间"
                                  ),
                              }
