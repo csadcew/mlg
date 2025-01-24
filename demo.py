@@ -138,7 +138,7 @@ if st.button("计算"):
                        "相对误差": st.column_config.NumberColumn(
                            "相对误差",
                            help="相对误差",
-                           format="%.2f%",
+                           format="%.2f\%",
                        ),
                    }
                    )
