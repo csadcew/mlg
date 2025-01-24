@@ -120,6 +120,7 @@ if st.button("计算"):
     result["电子数"] = (result["电荷量q"] // (1.6 * 10 ** -19))
     result["单电子电荷量"] = result["电荷量q"] / (result["电荷量q"] // (1.6 * 10 ** -19))
     # print(result)
+    result["相对误差"]=np.abs((result["单电子电荷量"]-1.60217733*10**-19)/(1.60217733*10**-19))
     st.divider()
 
     st.data_editor(result, use_container_width=True, hide_index=True,
@@ -133,6 +134,11 @@ if st.button("计算"):
                            "单电子电荷量",
                            help="单电子电荷量",
                            format="%.5e",
+                       ),
+                       "相对误差": st.column_config.NumberColumn(
+                           "相对误差",
+                           help="相对误差",
+                           format="%.2f%",
                        ),
                    }
                    )
