@@ -113,8 +113,9 @@ def calculate_q(U, t, rho1, rho2, g, eta, l, b, p, d):
 
     return q
 
+pwd=st.number_input("请输入软件密码: ")
 
-if st.button("计算"):
+if st.button("计算") and pwd==123:
     rho1 = param2["油的密度 kg·m^-3 (20°C)"].values[0]
     rho2 = param2["空气密度 kg·m^-3"].values[0]
     g = param2["重力加速度 m/s^2"].values[0]
@@ -153,3 +154,5 @@ if st.button("计算"):
                        ),
                    }
                    )
+else:
+    st.write("密码错误！！！！")
