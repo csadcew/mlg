@@ -81,7 +81,18 @@ data = {
     't': []
 }
 param_input = pd.DataFrame(data)
-param_input = st.data_editor(param_input, use_container_width=True, num_rows="dynamic")
+param_input = st.data_editor(param_input, use_container_width=True, num_rows="dynamic",
+                             column_config={
+                                 "U": st.column_config.NumberColumn(
+                                     "U",
+                                     help="电压"
+                                 ),
+                                 "t": st.column_config.NumberColumn(
+                                     "y",
+                                     help="时间"
+                                 ),
+                             }
+                             )
 
 
 def calculate_q(U, t, rho1, rho2, g, eta, l, b, p, d):
@@ -120,7 +131,7 @@ if st.button("计算"):
     result["电子数"] = (result["电荷量q"] // (1.6 * 10 ** -19))
     result["单电子电荷量"] = result["电荷量q"] / (result["电荷量q"] // (1.6 * 10 ** -19))
     # print(result)
-    result["相对误差"]=np.abs((result["单电子电荷量"]-1.60217733*10**-19)/(1.60217733*10**-19))*100
+    result["相对误差"] = np.abs((result["单电子电荷量"] - 1.60217733 * 10 ** -19) / (1.60217733 * 10 ** -19)) * 100
     st.divider()
 
     st.data_editor(result, use_container_width=True, hide_index=True,
