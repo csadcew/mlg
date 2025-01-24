@@ -95,7 +95,7 @@ def calculate_q(U, t, rho1, rho2, g, eta, l, b, p, d):
     denominator = np.sqrt(2 * (rho1 - rho2) * g)
 
     # 计算括号内的部分
-    bracket_part = (eta * l) / (t * (1 + b / (p * r))) ** (3 / 2)
+    bracket_part = ((eta * l) / (t * (1 + b / (p * r)))) ** (3 / 2)
 
     # 计算q
     q = (numerator / denominator) * (bracket_part * d / U)
