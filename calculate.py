@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-
 st.header("电荷电量表达式为:")
 st.latex(
     r"q = \frac{18\pi}{\sqrt{2(\rho_1 - \rho_2)g}} \left(\frac{\eta l}{t(1 + \frac{b}{pr})}\right)^{\frac{3}{2}} \frac{d}{U}")
@@ -112,26 +111,8 @@ def calculate_q(U, t, rho1, rho2, g, eta, l, b, p, d):
     q = (numerator / denominator) * (bracket_part * d / U)
 
     return q
-
-
-if st.button("计算"):
-    rho1 = param2["油的密度 kg·m^-3 (20°C)"].values[0]
-    rho2 = param2["空气密度 kg·m^-3"].values[0]
-    g = param2["重力加速度 m/s^2"].values[0]
-    eta = param1["粘滞系数 kg·m^-1·s^-1"].values[0]
-    l = param2["下落距离 m"].values[0]
-    b = param1["修正常数 N/m"].values[0]
-    p = param1["空气压强 Pa"].values[0]
-    d = param1["平行极板间距离 m"].values[0]
-    # st.write(rho1, rho2, g, eta, l, b, p, d)
-    result = param_input.apply(lambda x: calculate_q(x[0], x[1], rho1, rho2, g, eta, l, b, p, d), axis=1)
-    result = result.to_frame()
-    result.reset_index(names=["测试序号"], inplace=True)
-    result.rename(columns={0: "电荷量q"}, inplace=True)
-    result["电子数"] = (result["电荷量q"] // (1.6 * 10 ** -19))
-    result["单电子电荷量"] = result["电荷量q"] / (result["电荷量q"] // (1.6 * 10 ** -19))
-    # print(result)
-    result["相对误差"] = np.abs((result["单电子电荷量"] - 1.60217733 * 10 ** -19) / (1.60217733 * 10 ** -19)) * 100
+result=None
+if result:
     st.divider()
     st.write("计算结果")
     st.data_editor(result, use_container_width=True, hide_index=True,
@@ -153,3 +134,22 @@ if st.button("计算"):
                        ),
                    }
                    )
+
+if st.button("计算"):
+    rho1 = param2["油的密度 kg·m^-3 (20°C)"].values[0]
+    rho2 = param2["空气密度 kg·m^-3"].values[0]
+    g = param2["重力加速度 m/s^2"].values[0]
+    eta = param1["粘滞系数 kg·m^-1·s^-1"].values[0]
+    l = param2["下落距离 m"].values[0]
+    b = param1["修正常数 N/m"].values[0]
+    p = param1["空气压强 Pa"].values[0]
+    d = param1["平行极板间距离 m"].values[0]
+    # st.write(rho1, rho2, g, eta, l, b, p, d)
+    result = param_input.apply(lambda x: calculate_q(x[0], x[1], rho1, rho2, g, eta, l, b, p, d), axis=1)
+    result = result.to_frame()
+    result.reset_index(names=["测试序号"], inplace=True)
+    result.rename(columns={0: "电荷量q"}, inplace=True)
+    result["电子数"] = (result["电荷量q"] // (1.6 * 10 ** -19))
+    result["单电子电荷量"] = result["电荷量q"] / (result["电荷量q"] // (1.6 * 10 ** -19))
+    # print(result)
+    result["相对误差"] = np.abs((result["单电子电荷量"] - 1.60217733 * 10 ** -19) / (1.60217733 * 10 ** -19)) * 100
