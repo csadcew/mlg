@@ -10,4 +10,3 @@ if st.button("登录"):
     else:
         st.session_state.login_state = False
         st.error("密码错误!!!")
-        st.rerun()
