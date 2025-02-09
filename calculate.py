@@ -133,7 +133,7 @@ if st.button("计算"):
     # print(result)
     result["相对误差"] = np.abs((result["单电子电荷量"] - 1.60217733 * 10 ** -19) / (1.60217733 * 10 ** -19)) * 100
     st.divider()
-
+    st.write("计算结果")
     st.data_editor(result, use_container_width=True, hide_index=True,
                    column_config={
                        "电荷量q": st.column_config.NumberColumn(
