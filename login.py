@@ -6,6 +6,8 @@ if st.button("登录"):
     if pwd in p:
         st.session_state.login_state = True
         st.info("登录成功")
+        st.rerun()
     else:
         st.session_state.login_state = False
         st.error("密码错误!!!")
+        st.rerun()
