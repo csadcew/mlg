@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+
+if 'result' not in st.session_state:
+    st.session_state.result = None
 st.header("电荷电量表达式为:")
 st.latex(
     r"q = \frac{18\pi}{\sqrt{2(\rho_1 - \rho_2)g}} \left(\frac{\eta l}{t(1 + \frac{b}{pr})}\right)^{\frac{3}{2}} \frac{d}{U}")
@@ -111,11 +114,12 @@ def calculate_q(U, t, rho1, rho2, g, eta, l, b, p, d):
     q = (numerator / denominator) * (bracket_part * d / U)
 
     return q
-result=None
-if result:
+
+
+if st.session_state.result:
     st.divider()
     st.write("计算结果")
-    st.data_editor(result, use_container_width=True, hide_index=True,
+    st.data_editor(st.session_state.result, use_container_width=True, hide_index=True,
                    column_config={
                        "电荷量q": st.column_config.NumberColumn(
                            "电荷量q",
@@ -153,3 +157,4 @@ if st.button("计算"):
     result["单电子电荷量"] = result["电荷量q"] / (result["电荷量q"] // (1.6 * 10 ** -19))
     # print(result)
     result["相对误差"] = np.abs((result["单电子电荷量"] - 1.60217733 * 10 ** -19) / (1.60217733 * 10 ** -19)) * 100
+    st.session_state.result = result
